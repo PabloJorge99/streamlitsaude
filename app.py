@@ -142,19 +142,19 @@ def gestor_view():
     aba = st.sidebar.radio("Menu", ["Atestados", "Dados de Atendimento"])
 
     if aba == "Atestados":
-    st.subheader("Atestados Recebidos")
-
-    if "atestados" in st.session_state and st.session_state.atestados:
-        for idx, atestado in enumerate(st.session_state.atestados):
-            with st.expander(f"{atestado['nome']} - {atestado['data_envio']}"):
-                st.write(f"Nome do arquivo: {atestado['nome_arquivo']}")
-                st.download_button(
-                    label="📥 Baixar Atestado",
-                    data=atestado["arquivo"],
-                    file_name=atestado["nome_arquivo"]
-                )
-    else:
-        st.info("Nenhum atestado enviado.")
+        st.subheader("Atestados Recebidos")
+    
+        if "atestados" in st.session_state and st.session_state.atestados:
+            for idx, atestado in enumerate(st.session_state.atestados):
+                with st.expander(f"{atestado['nome']} - {atestado['data_envio']}"):
+                    st.write(f"Nome do arquivo: {atestado['nome_arquivo']}")
+                    st.download_button(
+                        label="📥 Baixar Atestado",
+                        data=atestado["arquivo"],
+                        file_name=atestado["nome_arquivo"]
+                    )
+        else:
+            st.info("Nenhum atestado enviado.")
 
 
     elif aba == "Dados de Atendimento":
