@@ -88,23 +88,23 @@ def funcionario_view():
             st.info("Nenhum agendamento encontrado.")
 
     elif aba == "Enviar Atestado":
-    st.subheader("Envio de Atestado Médico")
-    nome_funcionario = st.text_input("Seu nome")
-    arquivo_atestado = st.file_uploader("Envie o arquivo do atestado (PDF ou imagem)", type=["pdf", "png", "jpg"])
-
-    if st.button("Enviar") and nome_funcionario and arquivo_atestado:
-        atestado_data = {
-            "nome": nome_funcionario,
-            "data_envio": datetime.now().strftime("%d/%m/%Y %H:%M"),
-            "nome_arquivo": arquivo_atestado.name,
-            "arquivo": arquivo_atestado.getvalue()
-        }
-
-        if "atestados" not in st.session_state:
-            st.session_state.atestados = []
-
-        st.session_state.atestados.append(atestado_data)
-        st.success("Atestado enviado com sucesso!")
+        st.subheader("Envio de Atestado Médico")
+        nome_funcionario = st.text_input("Seu nome")
+        arquivo_atestado = st.file_uploader("Envie o arquivo do atestado (PDF ou imagem)", type=["pdf", "png", "jpg"])
+    
+        if st.button("Enviar") and nome_funcionario and arquivo_atestado:
+            atestado_data = {
+                "nome": nome_funcionario,
+                "data_envio": datetime.now().strftime("%d/%m/%Y %H:%M"),
+                "nome_arquivo": arquivo_atestado.name,
+                "arquivo": arquivo_atestado.getvalue()
+            }
+    
+            if "atestados" not in st.session_state:
+                st.session_state.atestados = []
+    
+            st.session_state.atestados.append(atestado_data)
+            st.success("Atestado enviado com sucesso!")
 
 
     elif aba == "Dicas de Saúde":
