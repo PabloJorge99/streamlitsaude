@@ -89,6 +89,11 @@ def funcionario_view():
 
     elif aba == "Enviar Atestado":
         st.subheader("Envio de Atestado Médico")
+        arquivo = st.file_uploader("Envie um arquivo", type=["csv", "xlsx", "pdf", "png", "jpg"])
+
+        if arquivo is not None:
+            st.write(f"Arquivo enviado: {arquivo.name}")
+
         dias = st.slider("Quantidade de dias", 1, 30)
         motivo = st.text_input("Motivo")
         if st.button("Enviar Atestado"):
