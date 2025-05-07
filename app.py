@@ -88,22 +88,23 @@ def funcionario_view():
             st.info("Nenhum agendamento encontrado.")
 
     elif aba == "Enviar Atestado":
-        st.subheader("Envio de Atestado Médico")
-        arquivo = st.file_uploader("Envie um arquivo", type=["csv", "xlsx", "pdf", "png", "jpg"])
+    st.subheader("Envio de Atestado Médico")
+    nome_funcionario = st.text_input("Seu nome")
+    arquivo_atestado = st.file_uploader("Envie o arquivo do atestado (PDF ou imagem)", type=["pdf", "png", "jpg"])
 
-        if arquivo is not None:
-            st.write(f"Arquivo enviado: {arquivo.name}")
+    if st.button("Enviar") and nome_funcionario and arquivo_atestado:
+        atestado_data = {
+            "nome": nome_funcionario,
+            "data_envio": datetime.now().strftime("%d/%m/%Y %H:%M"),
+            "nome_arquivo": arquivo_atestado.name,
+            "arquivo": arquivo_atestado.getvalue()
+        }
 
-        dias = st.slider("Quantidade de dias", 1, 30)
-        motivo = st.text_input("Motivo")
-        if st.button("Enviar Atestado"):
-            st.session_state.atestados.append({
-                "email": st.session_state.email,
-                "data_envio": datetime.now().strftime("%Y-%m-%d"),
-                "dias": dias,
-                "motivo": motivo
-            })
-            st.success("Atestado enviado com sucesso.")
+        if "atestados" not in st.session_state:
+            st.session_state.atestados = []
+
+        st.session_state.atestados.append(atestado_data)
+        st.success("Atestado enviado com sucesso!")
 
 
     elif aba == "Dicas de Saúde":
@@ -141,12 +142,20 @@ def gestor_view():
     aba = st.sidebar.radio("Menu", ["Atestados", "Dados de Atendimento"])
 
     if aba == "Atestados":
-        st.subheader("Atestados Recebidos")
-        if st.session_state.atestados:
-            df = pd.DataFrame(st.session_state.atestados)
-            st.table(df)
-        else:
-            st.info("Nenhum atestado enviado.")
+    st.subheader("Atestados Recebidos")
+
+    if "atestados" in st.session_state and st.session_state.atestados:
+        for idx, atestado in enumerate(st.session_state.atestados):
+            with st.expander(f"{atestado['nome']} - {atestado['data_envio']}"):
+                st.write(f"Nome do arquivo: {atestado['nome_arquivo']}")
+                st.download_button(
+                    label="📥 Baixar Atestado",
+                    data=atestado["arquivo"],
+                    file_name=atestado["nome_arquivo"]
+                )
+    else:
+        st.info("Nenhum atestado enviado.")
+
 
     elif aba == "Dados de Atendimento":
         st.subheader("Resumo de Agendamentos")
