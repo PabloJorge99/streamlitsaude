@@ -1,0 +1,7 @@
+[theme]
+base = "dark"
+primaryColor = "#1abc9c"         # Cor principal (botões, seleções, etc.)
+backgroundColor = "#0e1117"      # Fundo principal da página
+secondaryBackgroundColor = "#262730"  # Fundo de painéis e containers
+textColor = "#fafafa"            # Cor do texto
+font = "sans serif"              # Fonte (opções: sans serif, serif, monospace)
