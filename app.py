@@ -171,7 +171,11 @@ def gestor_view():
 if "email" not in st.session_state:
     login()
 else:
-    st.sidebar.image("logo_empresa.png", width=100)  
+    # Espaçamento e centralização "manual"
+    st.sidebar.markdown("###")
+    st.sidebar.markdown("##")
+    st.sidebar.image("logo_empresa.png", width=100)
+  
     
     if st.session_state.tipo_usuario == "funcionario":
         funcionario_view()
